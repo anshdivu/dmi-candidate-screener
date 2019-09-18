@@ -4,17 +4,16 @@ import authenticator from "./authenticator.middleware";
 import Environment from "./environment.config";
 
 const expressApp = (
-  nextRequestHandler: ReturnType<Server["getRequestHandler"]>,
+  nextJsRequestHandler: ReturnType<Server["getRequestHandler"]>,
   env: Environment
 ) => {
   const app = express();
-
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
 
   env.auth.isEnabled && app.use(authenticator(env.auth));
 
-  app.get("/*", (req, res) => nextRequestHandler(req, res));
+  app.get("/*", (req, res) => nextJsRequestHandler(req, res));
 
   return app;
 };
