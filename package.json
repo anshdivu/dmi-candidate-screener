@@ -1,0 +1,40 @@
+{
+  "name": "dmi-candidate-screener",
+  "version": "1.0.0",
+  "author": "Diviyansh Bhatnagar",
+  "license": "MIT",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node dist/index.js",
+    "start-ts": "ts-node --project tsconfig.server.json server/index.ts",
+    "dev": "nodemon --exec \"yarn start-ts\" --ext js --ext ts --watch server",
+    "build": "next build && tsc --project tsconfig.server.json"
+  },
+  "dependencies": {
+    "next": "^9.0.6",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.5",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "cross-env": "^6.0.0",
+    "husky": "^3.0.5",
+    "lint-staged": "^9.2.5",
+    "nodemon": "^1.19.2",
+    "prettier": "^1.18.2",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.6.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,css,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
