@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import Environment from "./environment";
+import Environment from "./environment.config";
 
 const authenticator = (authConfig: Environment["auth"]): RequestHandler => (
   _req,

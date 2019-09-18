@@ -1,6 +1,6 @@
 import next from "next";
 import expressApp from "./express.app";
-import Environment from "./environment";
+import Environment from "./environment.config";
 
 const env = new Environment();
 const nextApp = next({ dev: env.app.inDev });

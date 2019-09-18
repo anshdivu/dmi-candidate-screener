@@ -1,7 +1,7 @@
 import express from "express";
 import Server from "next/dist/next-server/server/next-server";
 import authenticator from "./authenticator.middleware";
-import Environment from "./environment";
+import Environment from "./environment.config";
 
 const expressApp = (
   nextRequestHandler: ReturnType<Server["getRequestHandler"]>,
