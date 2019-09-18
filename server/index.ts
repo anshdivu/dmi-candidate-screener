@@ -1,30 +1,14 @@
-import { createServer } from "http";
-import { parse } from "url";
 import next from "next";
+import expressApp from "./express.app";
+import Environment from "./environment";
 
-const port = parseInt(process.env.PORT || "3000", 10);
-const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
-const handle = app.getRequestHandler();
+const env = new Environment();
+const nextApp = next({ dev: env.app.inDev });
 
-app.prepare().then(() => {
-  createServer((req, res) => {
-    const parsedUrl = parse(req.url!, true);
-    const { pathname, query } = parsedUrl;
+nextApp.prepare().then(() => {
+  const server = expressApp(nextApp.getRequestHandler(), env);
 
-    if (pathname === "/a") {
-      app.render(req, res, "/a", query);
-    } else if (pathname === "/b") {
-      app.render(req, res, "/b", query);
-    } else {
-      handle(req, res, parsedUrl);
-    }
-  }).listen(port);
-
-  // tslint:disable-next-line:no-console
-  console.log(
-    `> Server listening at http://localhost:${port} as ${
-      dev ? "development" : process.env.NODE_ENV
-    }`
-  );
+  server.listen(env.app.port, () => {
+    console.log(`> Server listening at http://localhost:${env.app.port}`);
+  });
 });
