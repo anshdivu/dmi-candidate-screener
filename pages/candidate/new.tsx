@@ -26,8 +26,12 @@ const CreateCandidate: React.FC<Props> = () => {
                 className="input"
                 type="text"
                 name="firstName"
+                placeholder="First"
                 ref={register({ required: true })}
               />
+              {errors.firstName && (
+                <p className="help is-danger">First Name is Required</p>
+              )}
             </div>
           </div>
 
@@ -38,8 +42,12 @@ const CreateCandidate: React.FC<Props> = () => {
                 className="input"
                 type="text"
                 name="lastName"
+                placeholder="Last"
                 ref={register({ required: true })}
               />
+              {errors.lastName && (
+                <p className="help is-danger">Last Name is Required</p>
+              )}
             </div>
           </div>
 
@@ -53,6 +61,9 @@ const CreateCandidate: React.FC<Props> = () => {
                 name="email"
                 ref={register({ required: true })}
               />
+              {errors.email && (
+                <p className="help is-danger">Email is Required</p>
+              )}
             </div>
           </div>
 
@@ -66,6 +77,9 @@ const CreateCandidate: React.FC<Props> = () => {
                 placeholder="Java, C#, React.js"
                 ref={register({ required: true })}
               />
+              {errors.skills && (
+                <p className="help is-danger">Skills is Required</p>
+              )}
             </div>
           </div>
 
