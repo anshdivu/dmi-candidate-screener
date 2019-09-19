@@ -4,13 +4,10 @@ import Link from "next/link";
 export default () => (
   <ul>
     <li>
-      <Link href="/a" as="/a">
-        <a>a</a>
-      </Link>
-    </li>
-    <li>
-      <Link href="/b" as="/b">
-        <a>b</a>
+      <Link href="/candidate/new">
+        <button type="submit" className="button is-link">
+          Create new candidate
+        </button>
       </Link>
     </li>
   </ul>

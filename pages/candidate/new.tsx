@@ -1,102 +1,43 @@
 import React from "react";
-import useForm from "react-hook-form";
-import { OnSubmit } from "react-hook-form/dist/types";
+import CreateCandidateForm from "../../component/create-candidate.form";
 
 type Props = {};
 
-const CreateCandidate: React.FC<Props> = () => {
-  const { register, handleSubmit, errors } = useForm();
-
-  const formSubmission: OnSubmit<Record<string, any>> = (data, event) => {
-    console.log(errors);
-    console.log(data);
-
-    event.stopPropagation();
-    event.preventDefault();
-  };
-
+const CreateCandidatePage: React.FC<Props> = () => {
   return (
-    <div className="container">
-      <div className="notification">
-        <form onSubmit={handleSubmit(formSubmission)}>
-          <div className="field">
-            <label className="label">First Name</label>
-            <div className="control">
-              <input
-                className="input"
-                type="text"
-                name="firstName"
-                placeholder="First"
-                ref={register({ required: true })}
-              />
-              {errors.firstName && (
-                <p className="help is-danger">First Name is Required</p>
-              )}
+    <>
+      <nav
+        className="navbar has-shadow is-spaced"
+        role="navigation"
+        aria-label="main navigation"
+      >
+        <div className="navbar-brand">
+          <a className="navbar-item" href="/">
+            DMI
+          </a>
+        </div>
+        <div className="navbar-menu">
+          <div className="navbar-start">
+            <a className="navbar-item">Candidate</a>
+          </div>
+          <div className="navbar-end">
+            <div className="navbar-item">
+              <div className="buttons">
+                <a className="button is-primary">
+                  <strong>Log in</strong>
+                </a>
+              </div>
             </div>
           </div>
-
-          <div className="field">
-            <label className="label">Last Name</label>
-            <div className="control">
-              <input
-                className="input"
-                type="text"
-                name="lastName"
-                placeholder="Last"
-                ref={register({ required: true })}
-              />
-              {errors.lastName && (
-                <p className="help is-danger">Last Name is Required</p>
-              )}
-            </div>
-          </div>
-
-          <div className="field">
-            <label className="label">Email</label>
-            <div className="control">
-              <input
-                className="input"
-                type="email"
-                placeholder="name@email.com"
-                name="email"
-                ref={register({ required: true })}
-              />
-              {errors.email && (
-                <p className="help is-danger">Email is Required</p>
-              )}
-            </div>
-          </div>
-
-          <div className="field">
-            <label className="label">Skills</label>
-            <div className="control">
-              <input
-                className="input"
-                type="text"
-                name="skills"
-                placeholder="Java, C#, React.js"
-                ref={register({ required: true })}
-              />
-              {errors.skills && (
-                <p className="help is-danger">Skills is Required</p>
-              )}
-            </div>
-          </div>
-
-          <div className="field is-grouped">
-            <div className="control">
-              <button type="submit" className="button is-link">
-                Submit
-              </button>
-            </div>
-            <div className="control">
-              <button className="button is-text">Cancel</button>
-            </div>
-          </div>
-        </form>
+        </div>
+      </nav>
+      <div className="container">
+        <div className="notification">
+          <CreateCandidateForm />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default CreateCandidate;
+export default CreateCandidatePage;
