@@ -2,7 +2,7 @@
 .next
 
 # production server output
-dist
+.dist
 
 # dotenv environment variables file
 .env
