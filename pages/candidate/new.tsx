@@ -16,34 +16,72 @@ const CreateCandidate: React.FC<Props> = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(formSubmission)}>
-      <input
-        type="text"
-        placeholder="First Name"
-        name="First Name"
-        ref={register({ required: true })}
-      />
-      <input
-        type="text"
-        placeholder="Last Name"
-        name="Last Name"
-        ref={register({ required: true })}
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        name="Email"
-        ref={register({ required: true })}
-      />
-      <input
-        type="text"
-        placeholder="Skills"
-        name="Skills"
-        ref={register({ required: true })}
-      />
+    <div className="container">
+      <div className="notification">
+        <form onSubmit={handleSubmit(formSubmission)}>
+          <div className="field">
+            <label className="label">First Name</label>
+            <div className="control">
+              <input
+                className="input"
+                type="text"
+                name="firstName"
+                ref={register({ required: true })}
+              />
+            </div>
+          </div>
 
-      <input type="submit" />
-    </form>
+          <div className="field">
+            <label className="label">Last Name</label>
+            <div className="control">
+              <input
+                className="input"
+                type="text"
+                name="lastName"
+                ref={register({ required: true })}
+              />
+            </div>
+          </div>
+
+          <div className="field">
+            <label className="label">Email</label>
+            <div className="control">
+              <input
+                className="input"
+                type="email"
+                placeholder="name@email.com"
+                name="email"
+                ref={register({ required: true })}
+              />
+            </div>
+          </div>
+
+          <div className="field">
+            <label className="label">Skills</label>
+            <div className="control">
+              <input
+                className="input"
+                type="text"
+                name="skills"
+                placeholder="Java, C#, React.js"
+                ref={register({ required: true })}
+              />
+            </div>
+          </div>
+
+          <div className="field is-grouped">
+            <div className="control">
+              <button type="submit" className="button is-link">
+                Submit
+              </button>
+            </div>
+            <div className="control">
+              <button className="button is-text">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
