@@ -1,7 +1,7 @@
 import Environment from "./environment.config";
 import {
-  BearerStrategy,
-  IBearerStrategyOptionWithRequest
+  IOIDCStrategyOptionWithRequest,
+  OIDCStrategy
 } from "passport-azure-ad";
 import passport from "passport";
 
@@ -10,28 +10,46 @@ const authenticator = (authConfig: Environment["auth"]) => {
   if (!objectId) {
     throw new Error("No AD Object Id");
   }
+  if (
+    !authConfig.key1 ||
+    !authConfig.key2 ||
+    !authConfig.iv1 ||
+    !authConfig.iv2
+  ) {
+    throw new Error("No configured Keys");
+  }
+  if (!authConfig.redirectUrl) {
+    throw new Error("No configured redirectUrl");
+  }
   console.log("starting strategy options.");
-  var options: IBearerStrategyOptionWithRequest = {
-    identityMetadata:
-      "https://login.microsoftonline.com/allegient.onmicrosoft.com/.well-known/openid-configuration",
+  const options: IOIDCStrategyOptionWithRequest = {
+    identityMetadata: `https://login.microsoftonline.com/${authConfig.vendor}.onmicrosoft.com/.well-known/openid-configuration`,
     clientID: objectId,
+    responseType: "code id_token",
+    responseMode: "form_post",
+    redirectUrl: authConfig.redirectUrl,
+    allowHttpForRedirectUrl: true,
+    clientSecret: authConfig.clientSecret,
     validateIssuer: true,
+    useCookieInsteadOfSession: true,
+    cookieEncryptionKeys: [
+      { key: authConfig.key1, iv: authConfig.iv1 },
+      { key: authConfig.key2, iv: authConfig.iv2 }
+    ],
     passReqToCallback: true,
+    scope: ["profile"],
     loggingLevel: "info"
   };
 
   console.log("starting strategy.");
-  var strategy: BearerStrategy = new BearerStrategy(
+  var strategy: OIDCStrategy = new OIDCStrategy(
     options,
-    (req, token, done) => {
-      console.log("req: ", req);
-      console.log("token: ", token);
-      if (!token.oid) {
-        done(new Error("Oid is not found!"));
-      } else {
-        // owner = token.oid;
-        done(null, token);
+    (req: any, profile: any, done: any) => {
+      console.log(req);
+      if (!profile.oid) {
+        done(new Error("OID not found."), null);
       }
+      done(null, profile);
     }
   );
 
@@ -42,6 +60,6 @@ const authenticator = (authConfig: Environment["auth"]) => {
   console.log("finished use.");
 
   console.log("starting authenticate.");
-  return passport.authenticate("oauth-bearer");
+  return passport.authenticate("azuread-openidconnect");
 };
 export default authenticator;
