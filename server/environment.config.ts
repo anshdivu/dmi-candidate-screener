@@ -3,6 +3,7 @@
  */
 type EnvVars = Partial<{
   DISABLE_AUTH: string;
+  ACTIVE_DIRECTORY_OBJECT_ID: string;
   NODE_ENV: string;
   PORT: string;
 }>;
@@ -19,8 +20,8 @@ export default class Environment {
 
   get auth() {
     const isDisabled = toBoolean(this.config.DISABLE_AUTH);
-
-    return { isEnabled: !isDisabled, isDisabled };
+    const activeDirectoryObjectId = this.config.ACTIVE_DIRECTORY_OBJECT_ID;
+    return { isEnabled: !isDisabled, isDisabled, activeDirectoryObjectId };
   }
 }
 
