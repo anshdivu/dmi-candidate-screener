@@ -19,6 +19,9 @@ const CreateCandidatePage: React.FC<Props> = () => {
         <div className="navbar-menu">
           <div className="navbar-start">
             <a className="navbar-item">Candidate</a>
+            <a className="navbar-item" href="/candidate/topics">
+              Topics
+            </a>
           </div>
           <div className="navbar-end">
             <div className="navbar-item">
